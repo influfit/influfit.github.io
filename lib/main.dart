@@ -54,72 +54,55 @@ class _HomePageState extends State<HomePage> {
 
   // Function to submit influencer registration
   Future<void> _submitInfluencerRegistration() async {
-    // Debug print to check if function is called
-    print('Submit button pressed');
-    
-    // Check if form is valid
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      print('Form is valid');
-      
-      try {
-        // Show loading indicator
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return const Center(child: CircularProgressIndicator());
-          },
-        );
-
-        await FirebaseFirestore.instance.collection('influencer_registrations').add({
-          'fullName': _nameController.text,
-          'email': _emailController.text,
-          'socialMediaLink': _socialMediaController.text,
-          'secondSocialMediaLink': _secondSocialMediaController.text,
-          'timestamp': FieldValue.serverTimestamp(),
-        });
-        
-        // Close loading indicator
-        if (mounted) Navigator.of(context).pop();
-
-        // Clear the form
-        _nameController.clear();
-        _emailController.clear();
-        _socialMediaController.clear();
-        _secondSocialMediaController.clear();
-        
-        // Show success message
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration submitted successfully!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
-      } catch (e) {
-        // Close loading indicator
-        if (mounted) Navigator.of(context).pop();
-        
-        print('Error submitting registration: $e');
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error submitting registration: $e'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      }
-    } else {
-      print('Form is invalid');
-      // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all required fields correctly'),
-          backgroundColor: Colors.red,
-        ),
+    try {
+      // Show loading indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
       );
+
+      await FirebaseFirestore.instance.collection('influencer_registrations').add({
+        'fullName': _nameController.text,
+        'email': _emailController.text,
+        'socialMediaLink': _socialMediaController.text,
+        'secondSocialMediaLink': _secondSocialMediaController.text,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      
+      // Close loading indicator
+      if (mounted) Navigator.of(context).pop();
+
+      // Clear the form
+      _nameController.clear();
+      _emailController.clear();
+      _socialMediaController.clear();
+      _secondSocialMediaController.clear();
+      
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration submitted successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      // Close loading indicator
+      if (mounted) Navigator.of(context).pop();
+      
+      print('Error submitting registration: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error submitting registration: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -331,13 +314,6 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 24),
                               TextFormField(
                                 controller: _nameController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    print('Name validation failed'); // Debug print
-                                    return 'Name is required';
-                                  }
-                                  return null;
-                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: const Color(0xFFF5F5F5),
@@ -352,17 +328,6 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 16),
                               TextFormField(
                                 controller: _emailController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    print('Email validation failed'); // Debug print
-                                    return 'Email is required';
-                                  }
-                                  if (!value.contains('@')) {
-                                    print('Email format validation failed'); // Debug print
-                                    return 'Please enter a valid email';
-                                  }
-                                  return null;
-                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: const Color(0xFFF5F5F5),
@@ -377,13 +342,6 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 16),
                               TextFormField(
                                 controller: _socialMediaController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    print('Social media validation failed'); // Debug print
-                                    return 'Social media link is required';
-                                  }
-                                  return null;
-                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: const Color(0xFFF5F5F5),
