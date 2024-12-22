@@ -188,6 +188,9 @@ class _HomePageState extends State<HomePage> {
                               duration: const Duration(seconds: 3),
                               fadeOutBegin: 0.9,
                               fadeInEnd: 0.1,
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                             FadeAnimatedText(
                               'Have early access to our app and be part of our community',
@@ -195,6 +198,9 @@ class _HomePageState extends State<HomePage> {
                               duration: const Duration(seconds: 3),
                               fadeOutBegin: 0.9,
                               fadeInEnd: 0.1,
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                           isRepeatingAnimation: true, // Set to true for infinite repetition
@@ -250,12 +256,12 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.bottomCenter,
                       children: [
                         Image.asset(
-                          'assets/influfit_ios.png',
+                          'assets/mememe.png',
                           fit: BoxFit.contain,
-                          width: 300,
+                          width:500,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
+                          padding: const EdgeInsets.only(bottom: 1),
                           child: Text(
                             'For the first 2000 influencers\nWe give them free pass to the app\nJust pre-register',
                             textAlign: TextAlign.center,
